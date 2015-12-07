@@ -27,6 +27,7 @@ install:
  - go get github.com/twinj/uuid
  - go get github.com/axw/gocov/...
  - go get github.com/AlekSi/gocov-xml
+ - go get -u github.com/tools/godep
 
 before_script:
 # Standard mongodb 2.6 installation procedure (mongo docs)
