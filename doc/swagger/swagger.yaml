@@ -2343,6 +2343,161 @@ paths:
         500:
           $ref: "#/responses/ServerError"
           
+  
+  /recomputations:
+    get:
+      summary: "List Recomputation Requests"
+      description: "This method can be used to retrieve a list of recomputation requests."
+      tags:
+        - Recomputations
+      produces:
+        - "application/json"
+        - "application/xml"
+      parameters:
+        - $ref: "#/parameters/apiKey"
+      responses:
+        200:
+          description: "Successful retrieval of recomputations"
+          schema:
+            $ref: "#/definitions/RecomputationsListResponse"
+        400:
+          $ref: "#/responses/404"
+        401:
+          $ref: "#/responses/Unauthorized"
+        406:
+          $ref: "#/responses/406"
+        422:
+          $ref: "#/responses/422"
+        500:
+          $ref: "#/responses/ServerError"
+    post:
+      summary: "Create a new recomputation"
+      description: "This method can be used to create a new recomputation request."
+      tags:
+        - Recomputations
+      produces:
+        - "application/json"
+        - "application/xml"
+      parameters:
+        - $ref: "#/parameters/apiKey"
+        - name: "recomputation_request"
+          in: "body"
+          description: "Json description of the recomputation to be created"
+          required: true
+          schema:
+            $ref: '#/definitions/recomputation_request'
+      responses:
+        '200':
+          description: Recomputation Request Created
+          schema:
+            $ref: '#/definitions/Self_reference'
+        '400':
+          description: Bad request due to malformed JSON in post body
+          schema:
+            $ref: '#/definitions/Status_error'
+        '401':
+          description: Unauthorized user
+          schema:
+            $ref: '#/definitions/Status_error'
+        '406':
+          description: Content Not acceptable
+          schema:
+            $ref: '#/definitions/Status_error'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Status_error'
+
+  /recomputations/{ID}:
+    get:
+      summary: "Get Recomputation details"
+      description: "Get details of a recomputation with id ID."
+      tags:
+        - Recomputations
+      produces:
+        - "application/json"
+        - "application/xml"
+      parameters:
+        - name: "ID"
+          in: "path"
+          description: "the recomputation id"
+          required: true
+          type: string
+        - $ref: "#/parameters/apiKey"
+      responses:
+        200:
+          description: "Successful retrieval of recomputation details"
+          schema:
+            $ref: "#/definitions/RecomputationsListResponse"
+        400:
+          $ref: "#/responses/404"
+        401:
+          $ref: "#/responses/Unauthorized"
+        406:
+          $ref: "#/responses/406"
+        422:
+          $ref: "#/responses/422"
+        500:
+          $ref: "#/responses/ServerError"
+    put:
+      summary: "Update an existing recomputation"
+      description: "Updaet an existing recomputation with id ID."
+      tags:
+        - Recomputations
+      produces:
+        - "application/json"
+        - "application/xml"
+      parameters:
+        - name: "ID"
+          in: "path"
+          description: "the recomputation id"
+          required: true
+          type: string
+        - $ref: "#/parameters/apiKey"
+      responses:
+        200:
+          description: "Successful update of recomputation"
+          schema:
+            $ref: "#/definitions/Status"
+        400:
+          $ref: "#/responses/404"
+        401:
+          $ref: "#/responses/Unauthorized"
+        406:
+          $ref: "#/responses/406"
+        422:
+          $ref: "#/responses/422"
+        500:
+          $ref: "#/responses/ServerError"
+    delete:
+      summary: "Delete a specific recomputation"
+      description: "Delete a specific recomputation using its ID."
+      tags:
+        - Recomputations
+      produces:
+        - "application/json"
+        - "application/xml"
+      parameters:
+        - name: "ID"
+          in: "path"
+          description: "the recomputation id"
+          required: true
+          type: string
+        - $ref: "#/parameters/apiKey"
+      responses:
+        200:
+          description: "Successful deletion of recomputation "
+          schema:
+            $ref: '#/definitions/Status'
+        401:
+          $ref: "#/responses/Unauthorized"
+        406:
+          $ref: "#/responses/406"
+        404:
+          $ref: "#/responses/404"
+        500:
+          $ref: "#/responses/ServerError"
+          
   /recomputations/{ID}/status:
     post:
       summary: "change recomputation status"
@@ -2407,129 +2562,8 @@ paths:
           $ref: "#/responses/404"
         500:
           $ref: "#/responses/ServerError"
-
-  /recomputations/{ID}:
-    get:
-      summary: "Get Recomputation details"
-      description: "Get details of a recomputation with id ID."
-      tags:
-        - Recomputations
-      produces:
-        - "application/json"
-        - "application/xml"
-      parameters:
-        - name: "ID"
-          in: "path"
-          description: "the recomputation id"
-          required: true
-          type: string
-        - $ref: "#/parameters/apiKey"
-      responses:
-        200:
-          description: "Successful retrieval of recomputation details"
-          schema:
-            $ref: "#/definitions/RecomputationsListResponse"
-        400:
-          $ref: "#/responses/404"
-        401:
-          $ref: "#/responses/Unauthorized"
-        406:
-          $ref: "#/responses/406"
-        422:
-          $ref: "#/responses/422"
-        500:
-          $ref: "#/responses/ServerError"
-    delete:
-      summary: "Delete a specific recomputation"
-      description: "Delete a specific recomputation using its ID."
-      tags:
-        - Recomputations
-      produces:
-        - "application/json"
-        - "application/xml"
-      parameters:
-        - name: "ID"
-          in: "path"
-          description: "the recomputation id"
-          required: true
-          type: string
-        - $ref: "#/parameters/apiKey"
-      responses:
-        200:
-          description: "Successful deletion of recomputation "
-          schema:
-            $ref: '#/definitions/Status'
-        401:
-          $ref: "#/responses/Unauthorized"
-        406:
-          $ref: "#/responses/406"
-        404:
-          $ref: "#/responses/404"
-        500:
-          $ref: "#/responses/ServerError"
-  /recomputations:
-    get:
-      summary: "List Recomputation Requests"
-      description: "This method can be used to retrieve a list of recomputation requests."
-      tags:
-        - Recomputations
-      produces:
-        - "application/json"
-        - "application/xml"
-      parameters:
-        - $ref: "#/parameters/apiKey"
-      responses:
-        200:
-          description: "Successful retrieval of recomputations"
-          schema:
-            $ref: "#/definitions/RecomputationsListResponse"
-        400:
-          $ref: "#/responses/404"
-        401:
-          $ref: "#/responses/Unauthorized"
-        406:
-          $ref: "#/responses/406"
-        422:
-          $ref: "#/responses/422"
-        500:
-          $ref: "#/responses/ServerError"
-    post:
-      summary: "Create a new recomputation"
-      description: "This method can be used to create a new recomputation request."
-      tags:
-        - Recomputations
-      produces:
-        - "application/json"
-        - "application/xml"
-      parameters:
-        - $ref: "#/parameters/apiKey"
-        - name: "recomputation_request"
-          in: "body"
-          description: "Json description of the recomputation to be created"
-          required: true
-          schema:
-            $ref: '#/definitions/recomputation_request'
-      responses:
-        '200':
-          description: Recomputation Request Created
-          schema:
-            $ref: '#/definitions/Self_reference'
-        '400':
-          description: Bad request due to malformed JSON in post body
-          schema:
-            $ref: '#/definitions/Status_error'
-        '401':
-          description: Unauthorized user
-          schema:
-            $ref: '#/definitions/Status_error'
-        '406':
-          description: Content Not acceptable
-          schema:
-            $ref: '#/definitions/Status_error'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Status_error'
+          
+  
 
 parameters:
   topoDate:
