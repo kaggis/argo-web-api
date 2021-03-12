@@ -52,29 +52,27 @@ type StatusDetail struct {
 	TotalStatus  bool        `json:"total_status"`
 	AMS          DetailsAMS  `bson:"ams" json:"ams"`
 	HDFS         DetailsHDFS `bson:"hdfs" json:"hdfs"`
+	API          DetailAPI   `bson:"api" json:"api"`
 	EngineConfig bool        `bson:"engine_config" json:"engine_config"`
 	LastCheck    string      `bson:"last_check" json:"last_check"`
 }
 
 type DetailsAMS struct {
 	MetricData NodeAMS `bson:"metric_data" json:"metric_data"`
-	SyncData   NodeAMS `bson:"sync_data" json:"sync_data"`
 }
 
 type DetailsHDFS struct {
-	MetricData bool                    `bson:"metric_data" json:"metric_data"`
-	SyncData   map[string]SyncDataHDFS `bson:"sync_data" json:"sync_data,omitempty"`
+	MetricData bool `bson:"metric_data" json:"metric_data"`
 }
 
-type SyncDataHDFS struct {
-	AggregationProf bool `bson:"aggregation_profile" json:"aggregation_profile"`
-	Recomp          bool `bson:"blank_recomputation" json:"blank_recomputation"`
-	ConfigProf      bool `bson:"configuration_profile" json:"configuration_profile"`
+type DetailAPI struct {
+	AggregationProf bool `bson:"aggregation_profiles" json:"aggregation_profiles"`
+	ConfigProf      bool `bson:"reports" json:"reports"`
 	Donwtimes       bool `bson:"downtimes" json:"downtimes"`
 	GroupEndpoints  bool `bson:"group_endpoints" json:"group_endpoints"`
 	GroupGroups     bool `bson:"group_groups" json:"group_groups"`
-	MetricProf      bool `bson:"metric_profile" json:"metric_profile"`
-	OpsProf         bool `bson:"operations_profile" json:"operations_profile"`
+	MetricProf      bool `bson:"metric_profiles" json:"metric_profiles"`
+	OpsProf         bool `bson:"operations_profiles" json:"operations_profiles"`
 	Weight          bool `bson:"weights" json:"weights"`
 }
 

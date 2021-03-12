@@ -711,43 +711,30 @@ func (suite *TenantTestSuite) TestCreateTenantAlreadyExistingName() {
 func (suite *TenantTestSuite) TestUpdateTenantStatus() {
 
 	// create json input data for the request
-	putData := `
-	{
-      "ams": {
-          "metric_data": {
-              "ingestion": true,
-              "publishing": true,
-              "status_streaming": true,
-              "messages_arrived": 100
-          },
-          "sync_data": {
-              "ingestion": true,
-              "publishing": true,
-              "status_streaming": true,
-              "messages_arrived": 200
-          }
-      },
-      "hdfs": {
-          "metric_data": true,
-          "sync_data": {
-          	"Critical": {
-          			"downtimes": true,
-          			"group_endpoints": true,
-          			"blank_recomputation": true,
-								"configuration_profile": true,
-          			"group_groups": true,
-          			"weights": true,
-          			"operations_profile": true,
-          			"metric_profile": true,
-          			"aggregation_profile": true
-
-          	}
-          	}
-
-      },
-      "engine_config": true,
-      "last_check": "2018-08-10T12:32:45Z"
-
+	putData := `{
+  "ams": {
+    "metric_data": {
+      "ingestion": true,
+      "publishing": true,
+      "status_streaming": true,
+      "messages_arrived": 100
+    }
+  },
+  "hdfs": {
+    "metric_data": true
+  },
+  "api": {
+    "downtimes": true,
+    "group_endpoints": true,
+    "reports": true,
+    "group_groups": true,
+    "weights": true,
+    "operations_profiles": true,
+    "metric_profiles": true,
+    "aggregation_profiles": true
+  },
+  "engine_config": true,
+  "last_check": "2018-08-10T12:32:45Z"
 }`
 
 	jsonOutput := `{
@@ -782,29 +769,20 @@ func (suite *TenantTestSuite) TestUpdateTenantStatus() {
       "publishing": true,
       "status_streaming": true,
       "messages_arrived": 100
-     },
-     "sync_data": {
-      "ingestion": true,
-      "publishing": true,
-      "status_streaming": true,
-      "messages_arrived": 200
      }
     },
     "hdfs": {
-     "metric_data": true,
-     "sync_data": {
-      "Critical": {
-       "aggregation_profile": true,
-       "blank_recomputation": true,
-       "configuration_profile": true,
-       "downtimes": true,
-       "group_endpoints": true,
-       "group_groups": true,
-       "metric_profile": true,
-       "operations_profile": true,
-       "weights": true
-      }
-     }
+     "metric_data": true
+    },
+    "api": {
+     "aggregation_profiles": true,
+     "reports": true,
+     "downtimes": true,
+     "group_endpoints": true,
+     "group_groups": true,
+     "metric_profiles": true,
+     "operations_profiles": true,
+     "weights": true
     },
     "engine_config": true,
     "last_check": "2018-08-10T12:32:45Z"
@@ -839,6 +817,7 @@ func (suite *TenantTestSuite) TestUpdateTenantStatus() {
 
 	suite.Equal(200, code2, "Wrong code in response")
 	suite.Equal(jsonUpdatedTenant, output2, "Response body mismatch")
+
 }
 
 // TestUpdateTenant function implements testing the http PUT update tenant request.
@@ -1810,16 +1789,20 @@ func (suite *TenantTestSuite) TestListTenantStatus() {
       "publishing": false,
       "status_streaming": false,
       "messages_arrived": 0
-     },
-     "sync_data": {
-      "ingestion": false,
-      "publishing": false,
-      "status_streaming": false,
-      "messages_arrived": 0
      }
     },
     "hdfs": {
      "metric_data": false
+    },
+    "api": {
+     "aggregation_profiles": false,
+     "reports": false,
+     "downtimes": false,
+     "group_endpoints": false,
+     "group_groups": false,
+     "metric_profiles": false,
+     "operations_profiles": false,
+     "weights": false
     },
     "engine_config": false,
     "last_check": ""
